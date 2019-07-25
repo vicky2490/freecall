@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/freecall/static/css/main.990b6d91.chunk.css",
-    "main.js": "/freecall/static/js/main.0e7d25c5.chunk.js",
-    "main.js.map": "/freecall/static/js/main.0e7d25c5.chunk.js.map",
+    "main.js": "/freecall/static/js/main.c51e988c.chunk.js",
+    "main.js.map": "/freecall/static/js/main.c51e988c.chunk.js.map",
     "runtime~main.js": "/freecall/static/js/runtime~main.007ded09.js",
     "runtime~main.js.map": "/freecall/static/js/runtime~main.007ded09.js.map",
-    "static/js/2.3310f33a.chunk.js": "/freecall/static/js/2.3310f33a.chunk.js",
-    "static/js/2.3310f33a.chunk.js.map": "/freecall/static/js/2.3310f33a.chunk.js.map",
+    "static/js/2.6e89c9bc.chunk.js": "/freecall/static/js/2.6e89c9bc.chunk.js",
+    "static/js/2.6e89c9bc.chunk.js.map": "/freecall/static/js/2.6e89c9bc.chunk.js.map",
     "index.html": "/freecall/index.html",
-    "precache-manifest.3c7e769fdf93ba0869368255e866754b.js": "/freecall/precache-manifest.3c7e769fdf93ba0869368255e866754b.js",
+    "precache-manifest.95856aae6bcefbbc00a2e13ad84fcc1a.js": "/freecall/precache-manifest.95856aae6bcefbbc00a2e13ad84fcc1a.js",
     "service-worker.js": "/freecall/service-worker.js",
     "static/css/main.990b6d91.chunk.css.map": "/freecall/static/css/main.990b6d91.chunk.css.map",
     "static/media/App.css": "/freecall/static/media/index.cee911a9.jpg"
