@@ -1,5 +1,113 @@
 .game-wrap {
   width: 1280px;
   height: 800px;
-  background-color: #2C2B50;
 }
+
+.header {
+  height: 60px;
+  background-image: linear-gradient(to right, #5D7FD9 , #8957ED);
+  display: flex;
+  padding-left: 47px;
+  padding-right: 101px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  /*outline: 2px solid yellow;*/
+  font-family: 'Geostar', cursive;
+  width: 172px;
+  height: 30px;
+  font-size: 20px;
+  line-height: 30px;
+  text-align: justify;
+  letter-spacing: 3px;
+  color: #5D7FD9;
+  text-shadow: -1px -1px 0 white, -1px -1px 0 white, -1px -1px 0 white, -1px -1px 0 white;
+}
+
+.count-bar {
+  /*outline: 2px solid yellow;  */
+  width: 232px;
+  display: flex;
+  justify-content:space-between;
+  align-items:flex-end;
+}
+
+.count-time-move {
+  color: #FFFFFF;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: left;
+  font-family: Roboto;
+}
+
+.count-num {
+  /*outline: 2px solid black;    */
+  font-size: 30px;
+  line-height: 25px;
+}
+
+.context {
+  background-color: #2C2B50;
+  height: 740px;
+  padding: 40px 48px 0px 47px;
+  display: flex;
+  flex-wrap:wrap;
+  align-content:flex-start;
+  justify-content:space-between;
+}
+
+.vacancy-box {
+  width: 135px;
+  height: 140px;
+  background-color: rgba(158,153,255, 0.2);
+  border-radius: 16px 16px;
+}
+
+.standard-box {
+  width: 135px;
+  height: 140px;
+  background-color: rgba(158,153,255, 0.5);
+  border-radius: 16px 16px;
+  position: relative;
+}
+
+.suitdiamonds:before {  
+  content: "♦";  
+}  
+
+.suithearts:before {  
+  content: "♥";  
+}  
+         
+.suitclubs:before {  
+  content: "♣";  
+}  
+         
+.suitspades:before {  
+  content: "♠";  
+}  
+
+div[class*='suit']:before {  
+  position: absolute;  
+  font-size: 75px;  
+  top: 32px;
+  left: 32px; 
+  color: rgba(158,153,255, 0.6);  
+}  
+        
+/*div[class*='suit']:after {  
+  position: absolute;  
+  font-size: 35px;  
+  right: 5px;  
+  bottom: 5px;  
+}  */
+
+/*.diamonds {
+  content: "♦";  
+  color: white;  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}*/
