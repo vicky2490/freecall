@@ -5,7 +5,7 @@ import './css/cssReset.css';
 import { Switch, Router, Route } from 'react-router';
 import { createHashHistory } from 'history';
 import App from './App';
-import Game from './components/gameIndex/gameIndex';
+import Game from './components/GameIndex/GameIndex';
 import * as serviceWorker from './serviceWorker';
 
 const history = createHashHistory();
