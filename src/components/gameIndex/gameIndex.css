@@ -63,6 +63,7 @@
   height: 140px;
   background-color: rgba(158,153,255, 0.2);
   border-radius: 16px 16px;
+  margin-bottom: 39px;
 }
 
 .standard-box {
@@ -71,6 +72,7 @@
   background-color: rgba(158,153,255, 0.5);
   border-radius: 16px 16px;
   position: relative;
+  margin-bottom: 39px;
 }
 
 .suitdiamonds:before {  
@@ -96,18 +98,9 @@ div[class*='suit']:before {
   left: 32px; 
   color: rgba(158,153,255, 0.6);  
 }  
-        
-/*div[class*='suit']:after {  
-  position: absolute;  
-  font-size: 35px;  
-  right: 5px;  
-  bottom: 5px;  
-}  */
 
-/*.diamonds {
-  content: "♦";  
-  color: white;  
-  position: absolute;
-  top: 50%;
-  left: 50%;
-}*/
+.card {
+  outline: 2px solid yellow; 
+  width: 135px;
+  height: 380px;
+}
