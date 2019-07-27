@@ -122,8 +122,14 @@ class GameIndex extends Component {
             this.state.cardRows[7].content.map((data, i) => <Card key={i} cardRows={data} p={i}/>)
           }
           </div>
+          <div className="game-menu">
+            <div className="material-icons setting">power_settings_new</div>
+            <div className="material-icons setting">pause</div>
+            <button className="menu-btn">UNDO</button>
+            <div className="material-icons setting">replay</div>
+            <div className="material-icons setting">help_outline</div>
+          </div>                
         </div>
-        
       </div>
     )
   }

@@ -54,7 +54,7 @@
   padding: 40px 48px 0px 47px;
   display: flex;
   flex-wrap:wrap;
-  align-content:flex-start;
+  align-content:space-between;
   justify-content:space-between;
 }
 
@@ -104,4 +104,36 @@ div[class*='suit']:before {
   width: 135px;
   height: 380px;
   position: relative;
+}
+
+.game-menu {
+  /*outline: 2px solid yellow; */
+  width: 735px;
+  height: 72px;  
+  margin: 0 auto;
+  background-image: linear-gradient(to right, #5D7FD9 , #8957ED);
+  border-radius: 25px 25px 0px 0px;
+  box-shadow: 0px -10px 25px rgba(47, 43, 54, 0.8);
+  display: flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  padding: 0 87px 18px 87px;
+}
+
+.setting {
+  font-size: 33px;
+  color: white;
+}
+
+.menu-btn {
+  width: 135px;
+  height: 39.6px;
+  background-color: #FF6F72;
+  border-radius: 24px 24px;  
+  border: none;
+  color: white;
+  font-family: Roboto;
+  font-weight:bold;
+  text-decoration: none;
+  font-size: 15px;
 }
