@@ -99,8 +99,9 @@ div[class*='suit']:before {
   color: rgba(158,153,255, 0.6);  
 }  
 
-.card {
-  outline: 2px solid yellow; 
+.card-row {
+  /*outline: 2px solid yellow; */
   width: 135px;
   height: 380px;
+  position: relative;
 }

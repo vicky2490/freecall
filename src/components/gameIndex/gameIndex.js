@@ -82,18 +82,46 @@ class GameIndex extends Component {
           <div className="standard-box suitclubs"></div>
           <div className="standard-box suitspades"></div>
 
-          <div className="card">
+          <div className="card-row">
           {
-            this.state.cardRows[0].content.map((data, i) => <Card key={i} cardRows={data} />)
+            this.state.cardRows[0].content.map((data, i) => <Card key={i} cardRows={data} p={i}/>)
           }
           </div>
-          <div className="card"></div>
-          <div className="card"></div>
-          <div className="card"></div>
-          <div className="card"></div>
-          <div className="card"></div>
-          <div className="card"></div>
-          <div className="card"></div>
+          <div className="card-row">
+          {
+            this.state.cardRows[1].content.map((data, i) => <Card key={i} cardRows={data} p={i}/>)
+          }
+          </div>
+          <div className="card-row">
+          {
+            this.state.cardRows[2].content.map((data, i) => <Card key={i} cardRows={data} p={i}/>)
+          }
+          </div>
+          <div className="card-row">
+          {
+            this.state.cardRows[3].content.map((data, i) => <Card key={i} cardRows={data} p={i}/>)
+          }
+          </div>
+          <div className="card-row">
+          {
+            this.state.cardRows[4].content.map((data, i) => <Card key={i} cardRows={data} p={i}/>)
+          }
+          </div>
+          <div className="card-row">
+          {
+            this.state.cardRows[5].content.map((data, i) => <Card key={i} cardRows={data} p={i}/>)
+          }
+          </div>
+          <div className="card-row">
+          {
+            this.state.cardRows[6].content.map((data, i) => <Card key={i} cardRows={data} p={i}/>)
+          }
+          </div>
+          <div className="card-row">
+          {
+            this.state.cardRows[7].content.map((data, i) => <Card key={i} cardRows={data} p={i}/>)
+          }
+          </div>
         </div>
         
       </div>

@@ -1,0 +1,199 @@
+.card {
+  background-size: 135px 140px;
+  background-repeat: no-repeat;
+  width: 135px;
+  height: 140px;
+  position: absolute;
+  background-image: linear-gradient(to right, #F8ECFF , #EBF5FF, #DDFFFF);
+  box-shadow: 0px -5px 10px rgba(44, 43, 80, 0.1);
+  border-radius: 16px 16px;
+}
+
+.top-0 {
+  top: 0px;
+}
+
+.top-1 {
+  top: 36px;
+}
+
+.top-2 {
+  top: 72px;
+}
+
+.top-3 {
+  top: 108px;
+}
+
+.top-4 {
+  top: 144px;
+}
+
+.top-5 {
+  top: 180px;
+}
+
+.top-6 {
+  top: 216px;
+}
+
+
+.club-1 {
+  background-image: url('../../img/club/club_1.png');
+}
+.club-2 {
+  background-image: url('../../img/club/club_2.png');
+}
+.club-3 {
+  background-image: url('../../img/club/club_3.png');
+}
+.club-4 {
+  background-image: url('../../img/club/club_4.png');
+}
+.club-5 {
+  background-image: url('../../img/club/club_5.png');
+}
+.club-6 {
+  background-image: url('../../img/club/club_6.png');
+}
+.club-7 {
+  background-image: url('../../img/club/club_7.png');
+}
+.club-8 {
+  background-image: url('../../img/club/club_8.png');
+}
+.club-9 {
+  background-image: url('../../img/club/club_9.png');
+}
+.club-10 {
+  background-image: url('../../img/club/club_10.png');
+}
+.club-11 {
+  background-image: url('../../img/club/club_11.png');
+}
+.club-12 {
+  background-image: url('../../img/club/club_12.png');
+}
+.club-13 {
+  background-image: url('../../img/club/club_13.png');
+}
+
+.diamond-1 {
+  background-image: url('../../img/diamond/diamond_1.png');
+}
+.diamond-2 {
+  background-image: url('../../img/diamond/diamond_2.png');
+}
+.diamond-3 {
+  background-image: url('../../img/diamond/diamond_3.png');
+}
+.diamond-4 {
+  background-image: url('../../img/diamond/diamond_4.png');
+}
+.diamond-5 {
+  background-image: url('../../img/diamond/diamond_5.png');
+}
+.diamond-6 {
+  background-image: url('../../img/diamond/diamond_6.png');
+}
+.diamond-7 {
+  background-image: url('../../img/diamond/diamond_7.png');
+}
+.diamond-8 {
+  background-image: url('../../img/diamond/diamond_8.png');
+}
+.diamond-9 {
+  background-image: url('../../img/diamond/diamond_9.png');
+}
+.diamond-10 {
+  background-image: url('../../img/diamond/diamond_10.png');
+}
+.diamond-11 {
+  background-image: url('../../img/diamond/diamond_11.png');
+}
+.diamond-12 {
+  background-image: url('../../img/diamond/diamond_12.png');
+}
+.diamond-13 {
+  background-image: url('../../img/diamond/diamond_13.png');
+}
+
+.heart-1 {
+  background-image: url('../../img/heart/heart_1.png');
+}
+.heart-2 {
+  background-image: url('../../img/heart/heart_2.png');
+}
+.heart-3 {
+  background-image: url('../../img/heart/heart_3.png');
+}
+.heart-4 {
+  background-image: url('../../img/heart/heart_4.png');
+}
+.heart-5 {
+  background-image: url('../../img/heart/heart_5.png');
+}
+.heart-6 {
+  background-image: url('../../img/heart/heart_6.png');
+}
+.heart-7 {
+  background-image: url('../../img/heart/heart_7.png');
+}
+.heart-8 {
+  background-image: url('../../img/heart/heart_8.png');
+}
+.heart-9 {
+  background-image: url('../../img/heart/heart_9.png');
+}
+.heart-10 {
+  background-image: url('../../img/heart/heart_10.png');
+}
+.heart-11 {
+  background-image: url('../../img/heart/heart_11.png');
+}
+.heart-12 {
+  background-image: url('../../img/heart/heart_12.png');
+}
+.heart-13 {
+  background-image: url('../../img/heart/heart_13.png');
+}
+
+.spade-1 {
+  background-image: url('../../img/spade/spade_1.png');
+}
+.spade-2 {
+  background-image: url('../../img/spade/spade_2.png');
+}
+.spade-3 {
+  background-image: url('../../img/spade/spade_3.png');
+}
+.spade-4 {
+  background-image: url('../../img/spade/spade_4.png');
+}
+.spade-5 {
+  background-image: url('../../img/spade/spade_5.png');
+}
+.spade-6 {
+  background-image: url('../../img/spade/spade_6.png');
+}
+.spade-7 {
+  background-image: url('../../img/spade/spade_7.png');
+}
+.spade-8 {
+  background-image: url('../../img/spade/spade_8.png');
+}
+.spade-9 {
+  background-image: url('../../img/spade/spade_9.png');
+}
+.spade-10 {
+  background-image: url('../../img/spade/spade_10.png');
+}
+.spade-11 {
+  background-image: url('../../img/spade/spade_11.png');
+}
+.spade-12 {
+  background-image: url('../../img/spade/spade_12.png');
+}
+.spade-13 {
+  background-image: url('../../img/spade/spade_13.png');
+}

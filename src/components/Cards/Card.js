@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './Card.css';
-import test from '../../img/club/club_1.png';
 
 
 class Card extends Component {
@@ -13,36 +12,34 @@ class Card extends Component {
     } 
   }
 
-  getCardImgUrl = (eachColor, number) => {
-    let url = 'img/';
+  getCardImgCssName = (eachColor, number) => {
+    let cssName = '';
     switch (eachColor) {
       case 0:
-        url += 'spade/spade_'
+        cssName += 'spade-'
         break;
       case 1:
-        url += 'heart/heart_'
+        cssName += 'heart-'
         break;
       case 2:
-        url += 'club/club_'
+        cssName += 'club-'
         break;
       case 3:
-        url += 'diamond/diamond_'
+        cssName += 'diamond-'
         break;
       default:
         break;
     }
-    url += `${number}.png`;
-    // return url;
-    return test;
-    return '../../img/club/club_1.png';
+    cssName += number;
+    return cssName;
   }
 
   render() {
     let cardRows = this.props.cardRows;
-    let url = this.getCardImgUrl(cardRows.eachColor, cardRows.num);
-
+    let key = this.props.p;
+    let name = this.getCardImgCssName(cardRows.eachColor, cardRows.num);
     return (
-    <div style={{background: 'url(' + url + ')',height: '140px', width: '135px'}}>
+    <div className={`${name} card top-${key}`}>
     </div>
     )
   }
