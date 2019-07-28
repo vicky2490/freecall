@@ -9,6 +9,16 @@
   border-radius: 16px 16px;
 }
 
+div[draggable="true"] {
+  /*
+   To prevent user selecting inside the drag source
+  */
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
 .top-0 {
   top: 0px;
 }
@@ -197,3 +207,4 @@
 .spade-13 {
   background-image: url('../../img/spade/spade_13.png');
 }
+

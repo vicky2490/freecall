@@ -3,13 +3,28 @@ import './Card.css';
 
 
 class Card extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       card: [],
       cardRows: [],
-    } 
+    }
+  }
+
+  componentDidMount() {
+    let dragSources = document.querySelectorAll('[draggable="true"]')
+    dragSources.forEach(dragSource => {
+      dragSource.addEventListener('dragstart', this.dragStart)
+    })
+  }
+
+  dragStart = (e) => {
+    e.dataTransfer.setData('text/plain', e.target.id)
+    let sourceContainerId = e.target.id
+
+    if (this.props.setSourceContainerId) {
+      this.props.setSourceContainerId(sourceContainerId)
+    }
   }
 
   getCardImgCssName = (eachColor, number) => {
@@ -38,8 +53,10 @@ class Card extends Component {
     let cardRows = this.props.cardRows;
     let key = this.props.p;
     let name = this.getCardImgCssName(cardRows.eachColor, cardRows.num);
+    let draggable =  this.props.isLastCard;
+
     return (
-    <div className={`${name} card top-${key}`}>
+    <div className={`${name} card top-${key}`} draggable={Boolean(draggable)} id={`drag-${cardRows.eachColor}-${cardRows.num}-${cardRows.rowIndex}`}>
     </div>
     )
   }
