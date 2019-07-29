@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/freecall/static/css/main.7461763a.chunk.css",
-    "main.js": "/freecall/static/js/main.aea0a9a5.chunk.js",
-    "main.js.map": "/freecall/static/js/main.aea0a9a5.chunk.js.map",
+    "main.js": "/freecall/static/js/main.d6e1bb6a.chunk.js",
+    "main.js.map": "/freecall/static/js/main.d6e1bb6a.chunk.js.map",
     "runtime~main.js": "/freecall/static/js/runtime~main.007ded09.js",
     "runtime~main.js.map": "/freecall/static/js/runtime~main.007ded09.js.map",
     "static/js/2.3b1df921.chunk.js": "/freecall/static/js/2.3b1df921.chunk.js",
     "static/js/2.3b1df921.chunk.js.map": "/freecall/static/js/2.3b1df921.chunk.js.map",
     "index.html": "/freecall/index.html",
-    "precache-manifest.115f677354a0f5a24664ca20cd11cf4d.js": "/freecall/precache-manifest.115f677354a0f5a24664ca20cd11cf4d.js",
+    "precache-manifest.d9f9c7922ba65b071c62e9dc79fb5fe7.js": "/freecall/precache-manifest.d9f9c7922ba65b071c62e9dc79fb5fe7.js",
     "service-worker.js": "/freecall/service-worker.js",
     "static/css/main.7461763a.chunk.css.map": "/freecall/static/css/main.7461763a.chunk.css.map",
     "static/media/Card.css": "/freecall/static/media/spade_9.028c05dc.png",
