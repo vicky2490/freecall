@@ -38,26 +38,26 @@ class GameIndex extends Component {
     let rowData;
     let cardRows = this.state.cardRows;
     let newTargetContainer = _.clone(this.state.targetContainer);
-
-    if (arrayName === 'drag') {
-      rowData = cardRows[`${rowIndex}`].content.pop();
-    } else if (arrayName === 'dropped') {
-      rowData = newTargetContainer[`${rowIndex}`].pop();
-    }
     let targetData = e.target.id.split('-');
     let targetBoxIndex = targetData[3];
-    newTargetContainer[`${targetBoxIndex}`] = newTargetContainer[`${targetBoxIndex}`].concat([rowData]);
-        
-    this.cancelDefault(e)
-    this.setState({
-      cardRows, 
-      targetContainer: newTargetContainer,
-    })
-    
-    
-    // if (this.id !== this.state.sourceContainerId) {
-    
-    // }
+
+    let isInVacancyBox = e.target.className === 'vacancy-box' || e.target.parentElement.className === 'vacancy-box';
+    if (isInVacancyBox && newTargetContainer[`${targetBoxIndex}`].length >= 1) {
+      this.cancelDefault(e)
+    } else {
+      if (arrayName === 'drag') {
+        rowData = cardRows[`${rowIndex}`].content.pop();
+      } else if (arrayName === 'dropped') {
+        rowData = newTargetContainer[`${rowIndex}`].pop();
+      }
+      newTargetContainer[`${targetBoxIndex}`] = newTargetContainer[`${targetBoxIndex}`].concat([rowData]);
+          
+      this.cancelDefault(e)
+      this.setState({
+        cardRows, 
+        targetContainer: newTargetContainer,
+      })
+    }
   }
 
 
