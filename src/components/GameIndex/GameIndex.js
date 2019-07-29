@@ -34,6 +34,8 @@ class GameIndex extends Component {
     console.log('dropped')
     let data = e.dataTransfer.getData('text/plain').split('-');
     let arrayName = data[0];
+    let colorOfSourceCard = data[1];
+    let numOfSourceCard = data[2];
     let rowIndex = data[3];
     let rowData;
     let cardRows = this.state.cardRows;
@@ -41,8 +43,44 @@ class GameIndex extends Component {
     let targetData = e.target.id.split('-');
     let targetBoxIndex = targetData[3];
 
-    let isInVacancyBox = e.target.className === 'vacancy-box' || e.target.parentElement.className === 'vacancy-box';
+    // get vacancyBox or standardBox
+    let targetElement = newTargetContainer[`${targetBoxIndex}`].length >= 1 ? e.target.parentElement : e.target;
+    let targetClassName = targetElement.className.split(' ')[0];
+    let isInVacancyBox = targetClassName === 'vacancy-box';
+    let isInStandardBox = targetClassName === 'standard-box';
+
+    // 花色比對
+    let colorOfTargetContainer = targetElement.className.split(' ')[1];
+   
+    let isSameColor = false;
+    switch (colorOfTargetContainer) {
+      case 'suithearts':
+        isSameColor = Number(colorOfSourceCard) === 1;
+        break;
+      case 'suitdiamonds':
+        isSameColor = Number(colorOfSourceCard) === 3;
+        break;
+      case 'suitclubs':
+        isSameColor = Number(colorOfSourceCard) === 2;
+        break;
+      case 'suitspades':
+        isSameColor = Number(colorOfSourceCard) === 0;
+        break;
+    
+      default:
+        break;
+    }
+
+    // 比較數字
+    let lastTargetContainerObject = _.last(newTargetContainer[`${targetBoxIndex}`]);
+    let numOfTarget = lastTargetContainerObject ? lastTargetContainerObject.num : 0;
+    let isOrderCard = numOfTarget === numOfSourceCard-1;
+  
     if (isInVacancyBox && newTargetContainer[`${targetBoxIndex}`].length >= 1) {
+      this.cancelDefault(e)
+    } else if (isInStandardBox && !isSameColor){
+      this.cancelDefault(e)
+    } else if (isInStandardBox && isSameColor && !isOrderCard){
       this.cancelDefault(e)
     } else {
       if (arrayName === 'drag') {
