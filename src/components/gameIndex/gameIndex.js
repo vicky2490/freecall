@@ -32,20 +32,21 @@ class GameIndex extends Component {
 
   dropped = (e) => {
     console.log('dropped')
-    console.log('this.state.sourceContainerId', this.state.sourceContainerId);
-    let data = this.state.sourceContainerId.split('-');
+    let data = e.dataTransfer.getData('text/plain').split('-');
+    let arrayName = data[0];
     let rowIndex = data[3];
-    
-    // TODO: dropped card in which array
+    let rowData;
     let cardRows = this.state.cardRows;
-    let rowData = cardRows[`${rowIndex}`].content.pop();
-    console.log('e.target.id', e.target.id);
-    
-    let targetData = e.target.id.split('-');
-    let targetBoxIndex = targetData[2];
     let newTargetContainer = _.clone(this.state.targetContainer);
-    
-    newTargetContainer[`${targetBoxIndex}`] = this.state.targetContainer[`${targetBoxIndex}`].concat([rowData]);
+
+    if (arrayName === 'drag') {
+      rowData = cardRows[`${rowIndex}`].content.pop();
+    } else if (arrayName === 'dropped') {
+      rowData = newTargetContainer[`${rowIndex}`].pop();
+    }
+    let targetData = e.target.id.split('-');
+    let targetBoxIndex = targetData[3];
+    newTargetContainer[`${targetBoxIndex}`] = newTargetContainer[`${targetBoxIndex}`].concat([rowData]);
         
     this.cancelDefault(e)
     this.setState({
@@ -55,7 +56,6 @@ class GameIndex extends Component {
     
     
     // if (this.id !== this.state.sourceContainerId) {
-    let id = e.dataTransfer.getData('text/plain')
     
     // }
   }
@@ -128,69 +128,85 @@ class GameIndex extends Component {
           </div>
         </div>
         <div className="context">
-          <div className="vacancy-box" id="target-container-0" data-role="drag-drop-container">
+          <div className="vacancy-box" id="dropped-target-container-0" data-role="drag-drop-container">
           {
-            this.state.targetContainer[0].map((data, i) => <Card key={i} cardRows={data} p={i} isLastCard={this.state.targetContainer[0].length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+            this.state.targetContainer[0].map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={0} source={'dropped'} isLastCard={this.state.targetContainer[0].length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }       
           </div>
-          <div className="vacancy-box" id="target-container-1" data-role="drag-drop-container">
+          <div className="vacancy-box" id="dropped-target-container-1" data-role="drag-drop-container">
           {
-            this.state.targetContainer[1].map((data, i) => <Card key={i} cardRows={data} p={i} isLastCard={this.state.targetContainer[1].length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+            this.state.targetContainer[1].map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={1} source={'dropped'} isLastCard={this.state.targetContainer[1].length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           } 
           </div>
-          <div className="vacancy-box" id="target-container-2" data-role="drag-drop-container">
+          <div className="vacancy-box" id="dropped-target-container-2" data-role="drag-drop-container">
           {
-            this.state.targetContainer[2].map((data, i) => <Card key={i} cardRows={data} p={i} isLastCard={this.state.targetContainer[2].length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+            this.state.targetContainer[2].map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={2} source={'dropped'} isLastCard={this.state.targetContainer[2].length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           } 
           </div>
-          <div className="vacancy-box" id="target-container-3" data-role="drag-drop-container">
+          <div className="vacancy-box" id="dropped-target-container-3" data-role="drag-drop-container">
           {
-            this.state.targetContainer[3].map((data, i) => <Card key={i} cardRows={data} p={i} isLastCard={this.state.targetContainer[3].length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+            this.state.targetContainer[3].map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={3} source={'dropped'} isLastCard={this.state.targetContainer[3].length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           } 
           </div>
-          <div className="standard-box suithearts" id="target-container-4"></div>
-          <div className="standard-box suitdiamonds" id="target-container-5"></div>
-          <div className="standard-box suitclubs" id="target-container-6"></div>
-          <div className="standard-box suitspades" id="target-container-7"></div>
+          <div className="standard-box suithearts" id="dropped-target-container-4" data-role="drag-drop-container">
+          {
+            this.state.targetContainer[4].map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={4} source={'dropped'} isLastCard={this.state.targetContainer[4].length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+          } 
+          </div>
+          <div className="standard-box suitdiamonds" id="dropped-target-container-5" data-role="drag-drop-container">
+          {
+            this.state.targetContainer[5].map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={5} source={'dropped'} isLastCard={this.state.targetContainer[5].length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+          } 
+          </div>
+          <div className="standard-box suitclubs" id="dropped-target-container-6" data-role="drag-drop-container">
+          {
+            this.state.targetContainer[6].map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={6} source={'dropped'} isLastCard={this.state.targetContainer[6].length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+          } 
+          </div>
+          <div className="standard-box suitspades" id="dropped-target-container-7" data-role="drag-drop-container">
+          {
+            this.state.targetContainer[7].map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={7} source={'dropped'} isLastCard={this.state.targetContainer[7].length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+          } 
+          </div>
 
           <div className="card-row">
           {
-            this.state.cardRows[0].content.map((data, i) => <Card key={i} cardRows={data} p={i} isLastCard={this.state.cardRows[0].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+            this.state.cardRows[0].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={0} source={'drag'} isLastCard={this.state.cardRows[0].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
           <div className="card-row">
           {
-            this.state.cardRows[1].content.map((data, i) => <Card key={i} cardRows={data} p={i} isLastCard={this.state.cardRows[1].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+            this.state.cardRows[1].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={1} source={'drag'} isLastCard={this.state.cardRows[1].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
           <div className="card-row">
           {
-            this.state.cardRows[2].content.map((data, i) => <Card key={i} cardRows={data} p={i} isLastCard={this.state.cardRows[2].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+            this.state.cardRows[2].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={2} source={'drag'} isLastCard={this.state.cardRows[2].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
           <div className="card-row">
           {
-            this.state.cardRows[3].content.map((data, i) => <Card key={i} cardRows={data} p={i} isLastCard={this.state.cardRows[3].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+            this.state.cardRows[3].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={3} source={'drag'} isLastCard={this.state.cardRows[3].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
           <div className="card-row">
           {
-            this.state.cardRows[4].content.map((data, i) => <Card key={i} cardRows={data} p={i} isLastCard={this.state.cardRows[4].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+            this.state.cardRows[4].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={4} source={'drag'} isLastCard={this.state.cardRows[4].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
           <div className="card-row">
           {
-            this.state.cardRows[5].content.map((data, i) => <Card key={i} cardRows={data} p={i} isLastCard={this.state.cardRows[5].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+            this.state.cardRows[5].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={5} source={'drag'} isLastCard={this.state.cardRows[5].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
           <div className="card-row">
           {
-            this.state.cardRows[6].content.map((data, i) => <Card key={i} cardRows={data} p={i} isLastCard={this.state.cardRows[6].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+            this.state.cardRows[6].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={6} source={'drag'} isLastCard={this.state.cardRows[6].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
           <div className="card-row">
           {
-            this.state.cardRows[7].content.map((data, i) => <Card key={i} cardRows={data} p={i} isLastCard={this.state.cardRows[7].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+            this.state.cardRows[7].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={7} source={'drag'} isLastCard={this.state.cardRows[7].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
           <div className="game-menu">

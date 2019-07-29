@@ -21,7 +21,6 @@ class Card extends Component {
   dragStart = (e) => {
     e.dataTransfer.setData('text/plain', e.target.id)
     let sourceContainerId = e.target.id
-
     if (this.props.setSourceContainerId) {
       this.props.setSourceContainerId(sourceContainerId)
     }
@@ -51,12 +50,14 @@ class Card extends Component {
 
   render() {
     let cardRows = this.props.cardRows;
-    let key = this.props.p;
     let name = this.getCardImgCssName(cardRows.eachColor, cardRows.num);
     let draggable =  this.props.isLastCard;
+    let source =  this.props.source;
+    let key = source==='drag' ? this.props.p : 'auto';
+    let rowIndex = this.props.rowIndex;
 
     return (
-    <div className={`${name} card top-${key}`} draggable={Boolean(draggable)} id={`drag-${cardRows.eachColor}-${cardRows.num}-${cardRows.rowIndex}`}>
+    <div className={`${name} card top-${key}`} draggable={Boolean(draggable)} id={`${source}-${cardRows.eachColor}-${cardRows.num}-${rowIndex}`}>
     </div>
     )
   }
