@@ -1,0 +1,87 @@
+.bg {
+  /* outline: 2px solid yellow; */
+  width: 1200px;
+  height: 500px;
+  margin: 0 auto;
+  position: absolute;
+  top: 42%;
+  left: 3%;
+  background-color: rgba(158,153,255, 0.2);
+  z-index: 5;
+  display: flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.bg .menu {
+  display: flex;
+  text-align:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  width: 314px;
+  position: relative;
+}
+
+.bg .menu button {
+  width: 314px;
+  height: 57.4px;
+  background-color: #FF6F72;
+  border-radius: 54.55px 54.55px;  
+  border: none;
+  color: white;
+  font-family: Roboto;
+  font-weight:bold;
+  text-decoration: none;
+  font-size: 29px;
+  line-height: 51px;
+  text-align: center;
+  cursor: pointer; 
+  margin-bottom: 17px;
+  box-shadow: 0 10px 30px rgba(49,20,78, 0.5);
+}
+.bg .menu button:hover{
+  border: 2px solid white;
+}
+.bg .menu button:active{
+  border: 2px solid white;
+}
+
+.card-spade {
+  background-image: url('../../img/spade/spade_1.png');
+  height: 117px;
+  width: 113px;
+  background-size: 113px 117px;
+  clip: rect(25px 113px 117px 0px);
+  position: absolute;
+  top: -110px;
+  z-index: -1;
+  border-radius: 7px 7px 0px 0px;  
+}
+
+.card-heart {
+  background-image: url('../../img/heart/heart_1.png');
+  height: 117px;
+  width: 113px;
+  background-size: 113px 117px;
+  clip: rect(25px 113px 117px 0px);
+  position: absolute;
+  transform:rotate(-25deg);
+  top: -90px;
+  left: 40px;
+  z-index: -2;
+  border-radius: 7px 7px 0px 0px;  
+}
+
+.card-club {
+  background-image: url('../../img/club/club_1.png');
+  height: 117px;
+  width: 113px;
+  background-size: 113px 117px;
+  clip: rect(25px 113px 117px 0px);
+  position: absolute;
+  transform:rotate(25deg);
+  top: -90px;
+  right: 40px;
+  z-index: -2;
+  border-radius: 7px 7px 0px 0px;  
+}

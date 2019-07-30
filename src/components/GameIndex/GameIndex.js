@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './GameIndex.css';
 import _ from 'lodash';
 import Card from '../Cards/Card';
+import FinalMenu from '../FinalMenus/FinalMenu';
 import moment from 'moment';
 
 class GameIndex extends Component {
@@ -17,7 +18,8 @@ class GameIndex extends Component {
       move: '00',
       time: 0,
       pause: false,
-    } 
+      openMenu: false,
+    }
   }
 
   componentDidMount() {
@@ -27,6 +29,10 @@ class GameIndex extends Component {
       dropTarget.addEventListener('dragenter', this.cancelDefault)
       dropTarget.addEventListener('dragover', this.cancelDefault)
     })
+    this.timeCount();
+   }
+
+  timeCount = () => {
     if (!this.state.pause) {
       this.interval = setInterval(() => {
         let time = this.state.time + 1;
@@ -35,7 +41,7 @@ class GameIndex extends Component {
         });
       }, 1000);
     }
-   }
+  }
 
   cancelDefault = (e) => {
     e.preventDefault()
@@ -236,6 +242,58 @@ class GameIndex extends Component {
 
   // 畫面出來前 給予card預設值(洗牌,每排幾張)以及發牌
   componentWillMount () {
+    this.newGame();
+  }
+
+  setSourceContainerId = (sourceContainerId) => {
+    this.setState({
+      sourceContainerId, 
+    })
+  }
+  
+  showTime = () => {
+    const timer = moment()
+      .startOf('day')
+      .add(this.state.time, 'second');
+    return timer.format('mm:ss');
+  }
+
+  onPause = () => {
+    let pause = !Boolean(this.state.pause);
+    this.setState({pause}, ()=>{
+      console.log('this.state.pause', this.state.pause);
+      if(this.state.pause) {
+        this.interval && clearInterval(this.interval);
+      } else {
+        this.timeCount();
+      }
+    })
+  }
+
+  startMenu = () => {
+    this.setState({
+      openMenu: true, 
+    })
+  }
+
+  exit = () => {
+    this.setState({
+      openMenu: false, 
+    })
+  }
+
+  newGame = () => {
+    this.setState({
+      card: [],
+      cardRows: [],
+      sourceContainerId: '',
+      targetContainer: [[],[],[],[],[],[],[],[]],
+      previouslyStep: [],
+      move: '00',
+      time: 0,
+      pause: false,
+      openMenu: false,
+    });
     let card = [];
     let row = [7,7,7,7,6,6,6,6];
     let cardRows = [];
@@ -282,27 +340,6 @@ class GameIndex extends Component {
     })
   }
 
-  setSourceContainerId = (sourceContainerId) => {
-    this.setState({
-      sourceContainerId, 
-    })
-  }
-  
-  showTime = () => {
-    const timer = moment()
-      .startOf('day')
-      .add(this.state.time, 'second');
-    return timer.format('mm:ss');
-  }
-
-  onPause = () => {
-    let pause = this.state.pause;
-    this.interval && clearInterval(this.interval);
-    this.setState({
-      pause: !pause, 
-    })
-  }
-
   render() {
     return (
       <div className="game-wrap">
@@ -315,7 +352,7 @@ class GameIndex extends Component {
             <div className="count-time-move count-num">{this.state.move}</div>
           </div>
         </div>
-        <div className="context">
+        <div className={this.state.openMenu ? "content blurry" : "content"}>
           <div className="vacancy-box" id="dropped-target-container-0" data-role="drag-drop-container">
           {
             this.state.targetContainer[0].map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={0} source={'dropped'} isLastCard={this.state.targetContainer[0].length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
@@ -359,52 +396,53 @@ class GameIndex extends Component {
 
           <div className="card-row" data-role="drag-drop-container">
           {
-            this.state.cardRows[0].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={0} source={'drag'} isLastCard={this.state.cardRows[0].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+            _.get(this.state.cardRows[0], 'content', []).map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={0} source={'drag'} isLastCard={this.state.cardRows[0].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
           <div className="card-row" data-role="drag-drop-container">
           {
-            this.state.cardRows[1].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={1} source={'drag'} isLastCard={this.state.cardRows[1].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+            _.get(this.state.cardRows[1], 'content', []).map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={1} source={'drag'} isLastCard={this.state.cardRows[1].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
           <div className="card-row" data-role="drag-drop-container">
           {
-            this.state.cardRows[2].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={2} source={'drag'} isLastCard={this.state.cardRows[2].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+            _.get(this.state.cardRows[2], 'content', []).map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={2} source={'drag'} isLastCard={this.state.cardRows[2].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
           <div className="card-row" data-role="drag-drop-container">
           {
-            this.state.cardRows[3].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={3} source={'drag'} isLastCard={this.state.cardRows[3].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+            _.get(this.state.cardRows[3], 'content', []).map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={3} source={'drag'} isLastCard={this.state.cardRows[3].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
           <div className="card-row" data-role="drag-drop-container">
           {
-            this.state.cardRows[4].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={4} source={'drag'} isLastCard={this.state.cardRows[4].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+            _.get(this.state.cardRows[4], 'content', []).map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={4} source={'drag'} isLastCard={this.state.cardRows[4].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
           <div className="card-row" data-role="drag-drop-container">
           {
-            this.state.cardRows[5].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={5} source={'drag'} isLastCard={this.state.cardRows[5].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+            _.get(this.state.cardRows[5], 'content', []).map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={5} source={'drag'} isLastCard={this.state.cardRows[5].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
           <div className="card-row" data-role="drag-drop-container">
           {
-            this.state.cardRows[6].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={6} source={'drag'} isLastCard={this.state.cardRows[6].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+            _.get(this.state.cardRows[6], 'content', []).map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={6} source={'drag'} isLastCard={this.state.cardRows[6].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
           <div className="card-row" data-role="drag-drop-container">
           {
-            this.state.cardRows[7].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={7} source={'drag'} isLastCard={this.state.cardRows[7].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
+            _.get(this.state.cardRows[7], 'content', []).map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={7} source={'drag'} isLastCard={this.state.cardRows[7].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
           <div className="game-menu">
-            <div className="material-icons setting">power_settings_new</div>
+            <div className={this.state.openMenu ? "material-icons setting work-Setting" : "material-icons setting"} onClick={()=>this.startMenu()}>power_settings_new</div>
             <div className={this.state.pause ? "material-icons setting work-Setting" : "material-icons setting"} onClick={()=>this.onPause()}>pause</div>
-            <button className="menu-btn">UNDO</button>
+            <button className="menu-btn replay" onClick={()=>this.replayPreviouslyStep()}>UNDO</button>
             <div className="material-icons setting replay" onClick={()=>this.replayPreviouslyStep()}>replay</div>
             <div className="material-icons setting">help_outline</div>
           </div>                
         </div>
+        { this.state.openMenu && <FinalMenu exit={()=>this.exit()} newGame={()=>this.newGame()}/>}
       </div>
     )
   }

@@ -31,6 +31,13 @@
   cursor: pointer; 
 }
 
+button:hover{
+  border: 2px solid white;
+}
+button:active{
+  border: 2px solid white;
+}
+
 .index-menu-box {
   /* outline: 2px solid yellow; */
   width: 370px;

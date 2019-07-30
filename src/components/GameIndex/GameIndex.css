@@ -48,7 +48,7 @@
   line-height: 25px;
 }
 
-.context {
+.content {
   background-color: #2C2B50;
   height: 740px;
   padding: 40px 48px 0px 47px;
@@ -56,6 +56,10 @@
   flex-wrap:wrap;
   align-content:space-between;
   justify-content:space-between;
+}
+
+.blurry {
+  filter: blur(6px);
 }
 
 .vacancy-box {
@@ -125,6 +129,10 @@ div[class*='suit']:before {
   font-size: 33px;
   color: white;
   cursor: pointer; 
+}
+
+.setting:hover {
+  color: #FF6F72;
 }
 
 .work-Setting {
