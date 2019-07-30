@@ -124,6 +124,11 @@ div[class*='suit']:before {
 .setting {
   font-size: 33px;
   color: white;
+  cursor: pointer; 
+}
+
+.work-Setting {
+  color: #FF6F72;
 }
 
 .menu-btn {
@@ -137,6 +142,9 @@ div[class*='suit']:before {
   font-weight:bold;
   text-decoration: none;
   font-size: 15px;
+  cursor: pointer; 
 }
 
-
+.replay:active {
+  color: #FF6F72;
+}

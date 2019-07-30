@@ -13,15 +13,11 @@ class GameIndex extends Component {
       cardRows: [],
       sourceContainerId: '',
       targetContainer: [[],[],[],[],[],[],[],[]],
+      previouslyStep: [],
       move: '00',
       time: 0,
+      pause: false,
     } 
-    this.interval = setInterval(() => {
-      let time = this.state.time + 1;
-      this.setState({
-        time,
-      });
-    }, 1000);
   }
 
   componentDidMount() {
@@ -31,6 +27,14 @@ class GameIndex extends Component {
       dropTarget.addEventListener('dragenter', this.cancelDefault)
       dropTarget.addEventListener('dragover', this.cancelDefault)
     })
+    if (!this.state.pause) {
+      this.interval = setInterval(() => {
+        let time = this.state.time + 1;
+        this.setState({
+          time,
+        });
+      }, 1000);
+    }
    }
 
   cancelDefault = (e) => {
@@ -148,27 +152,87 @@ class GameIndex extends Component {
     } else {
       let move = Number(this.state.move);
       move += 1;
+      let stepArrayName;
+      let stepSourceArrayIndex = rowIndex;
+      let targetArrayName;
+      let targetArrayIndex;
       if (arrayName === 'drag') {
         rowData = cardRows[`${rowIndex}`].content.pop();
+        stepArrayName = 'cardRows';
       } else if (arrayName === 'dropped') {
         rowData = newTargetContainer[`${rowIndex}`].pop();
+        stepArrayName = 'newTargetContainer';
       }
 
       if (isInCard) {
         cardRows[`${cardIndex}`].content.push(rowData);
+        targetArrayName = 'cardRows';
+        targetArrayIndex = cardIndex;
       } else {
         newTargetContainer[`${targetBoxIndex}`] = newTargetContainer[`${targetBoxIndex}`].concat([rowData]);
+        targetArrayName = 'newTargetContainer';      
+        targetArrayIndex = targetBoxIndex;
       }
+
+      let previouslyStep = _.clone(this.state.previouslyStep);
+      previouslyStep.push({
+        sourceArray: stepArrayName,
+        sourceIndex: stepSourceArrayIndex,
+        targetArray: targetArrayName,
+        targetIndex: targetArrayIndex,
+        rowData,
+      });
           
       this.cancelDefault(e)
       this.setState({
         cardRows, 
         targetContainer: newTargetContainer,
         move,
+        previouslyStep,
       })
     }
   }
 
+  replayPreviouslyStep = () => {
+    let previouslyStep = _.clone(this.state.previouslyStep);
+    if (!previouslyStep.length) return;
+
+    let lastPreviouslyStep = _.last(previouslyStep);
+
+    let sourceArray = lastPreviouslyStep.sourceArray;
+    let sourceIndex = Number(lastPreviouslyStep.sourceIndex);
+    let targetArray = lastPreviouslyStep.targetArray;
+    let targetIndex = Number(lastPreviouslyStep.targetIndex);
+    let rowData = lastPreviouslyStep.rowData;
+
+    let cardRowsClone = _.clone(this.state.cardRows);
+    let newTargetContainerClone = _.clone(this.state.targetContainer);
+
+    // back pop to target
+    if (targetArray === 'cardRows') {     
+      cardRowsClone[`${targetIndex}`].content.pop();
+    } else {
+      newTargetContainerClone[`${targetIndex}`].pop();
+    }
+
+    // back push to source
+    if (sourceArray === 'cardRows') {
+      cardRowsClone[`${sourceIndex}`].content.push(rowData);
+    } else {
+      newTargetContainerClone[`${sourceIndex}`] = newTargetContainerClone[`${sourceIndex}`].concat([rowData]);
+    }
+    previouslyStep.pop();
+    // move count --
+    let move = Number(this.state.move);
+    move -= 1;
+
+    this.setState({
+      cardRows: cardRowsClone, 
+      targetContainer: newTargetContainerClone,
+      previouslyStep,
+      move,
+    });
+  }
 
   // 畫面出來前 給予card預設值(洗牌,每排幾張)以及發牌
   componentWillMount () {
@@ -229,6 +293,14 @@ class GameIndex extends Component {
       .startOf('day')
       .add(this.state.time, 'second');
     return timer.format('mm:ss');
+  }
+
+  onPause = () => {
+    let pause = this.state.pause;
+    this.interval && clearInterval(this.interval);
+    this.setState({
+      pause: !pause, 
+    })
   }
 
   render() {
@@ -327,9 +399,9 @@ class GameIndex extends Component {
           </div>
           <div className="game-menu">
             <div className="material-icons setting">power_settings_new</div>
-            <div className="material-icons setting">pause</div>
+            <div className={this.state.pause ? "material-icons setting work-Setting" : "material-icons setting"} onClick={()=>this.onPause()}>pause</div>
             <button className="menu-btn">UNDO</button>
-            <div className="material-icons setting">replay</div>
+            <div className="material-icons setting replay" onClick={()=>this.replayPreviouslyStep()}>replay</div>
             <div className="material-icons setting">help_outline</div>
           </div>                
         </div>
