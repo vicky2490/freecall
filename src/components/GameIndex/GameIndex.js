@@ -32,55 +32,109 @@ class GameIndex extends Component {
 
   dropped = (e) => {
     console.log('dropped')
+    // get source
     let data = e.dataTransfer.getData('text/plain').split('-');
     let arrayName = data[0];
     let colorOfSourceCard = data[1];
     let numOfSourceCard = data[2];
     let rowIndex = data[3];
     let rowData;
-    let cardRows = this.state.cardRows;
+    let cardRows = _.clone(this.state.cardRows);
     let newTargetContainer = _.clone(this.state.targetContainer);
+    // get target
     let targetData = e.target.id.split('-');
+    let targetArrayName = targetData[0];
     let targetBoxIndex = targetData[3];
+    let targetElement;
 
-    // get vacancyBox or standardBox
-    let targetElement = newTargetContainer[`${targetBoxIndex}`].length >= 1 ? e.target.parentElement : e.target;
+    // get vacancyBox or standardBox or card
+    if (e.target.className.split(' ')[0] === 'card' && targetArrayName === 'drag') {
+      targetElement = e.target;
+    } else {
+      targetElement = newTargetContainer[`${targetBoxIndex}`].length >= 1 ? e.target.parentElement : e.target;
+    }
+    
     let targetClassName = targetElement.className.split(' ')[0];
     let isInVacancyBox = targetClassName === 'vacancy-box';
     let isInStandardBox = targetClassName === 'standard-box';
+    let isInCard = targetClassName === 'card';
 
     // 花色比對
     let colorOfTargetContainer = targetElement.className.split(' ')[1];
-   
-    let isSameColor = false;
+    if (isInCard) {
+      colorOfTargetContainer = Number(e.target.id.split('-')[1]);
+    }
+    // 同種花色 for 右上角四個 standard-box
+    let isSameKindColor = false;
     switch (colorOfTargetContainer) {
       case 'suithearts':
-        isSameColor = Number(colorOfSourceCard) === 1;
+        isSameKindColor = Number(colorOfSourceCard) === 1;
         break;
       case 'suitdiamonds':
-        isSameColor = Number(colorOfSourceCard) === 3;
+        isSameKindColor = Number(colorOfSourceCard) === 3;
         break;
       case 'suitclubs':
-        isSameColor = Number(colorOfSourceCard) === 2;
+        isSameKindColor = Number(colorOfSourceCard) === 2;
         break;
       case 'suitspades':
-        isSameColor = Number(colorOfSourceCard) === 0;
+        isSameKindColor = Number(colorOfSourceCard) === 0;
         break;
     
       default:
         break;
     }
 
-    // 比較數字
-    let lastTargetContainerObject = _.last(newTargetContainer[`${targetBoxIndex}`]);
-    let numOfTarget = lastTargetContainerObject ? lastTargetContainerObject.num : 0;
-    let isOrderCard = numOfTarget === numOfSourceCard-1;
-  
+    // 同顏色花色 for cards
+    let isSameColor = false;
+    switch (Number(colorOfTargetContainer)) {
+      case 1 :
+          isSameColor = Number(colorOfSourceCard) === 1 || Number(colorOfSourceCard) === 3;
+        break;
+      case 3 :
+          isSameColor = Number(colorOfSourceCard) === 1 || Number(colorOfSourceCard) === 3;
+        break;
+      case 0 :
+          isSameColor = Number(colorOfSourceCard) === 0 || Number(colorOfSourceCard) === 2;
+        break;
+      case 2 :
+          isSameColor = Number(colorOfSourceCard) === 0 || Number(colorOfSourceCard) === 2;
+        break;
+      default:
+        break;
+    }
+
+    // 比較數字: cards排放由大到小
+    let numOfTarget;
+    let isOrderCard;
+    if (isInCard) {
+      numOfTarget = e.target.id.split('-')[2];
+      isOrderCard = Number(numOfTarget) === Number(numOfSourceCard)+1;
+    } else { // standard-box排放由小到大
+      let lastTargetContainerObject = _.last(newTargetContainer[`${targetBoxIndex}`]);
+      numOfTarget = lastTargetContainerObject ? lastTargetContainerObject.num : 0;
+      isOrderCard = Number(numOfTarget) === Number(numOfSourceCard)-1;    
+    }
+
+    // move to card: 比對target card 是否為最後一張牌
+    let cardIndex = e.target.id.split('-')[3];
+    let lastCard = _.last(cardRows[`${cardIndex}`].content);
+    let isTargetCardLastCard = Number(lastCard.eachColor) === Number(colorOfTargetContainer) && Number(lastCard.num) === Number(numOfTarget);
+
+    // 可放置規則:
+    // isInVacancyBox: 只能一張
+    // isInStandardBox: 需要同種花色且由小到大
+    // isInCard: 需要同顏色花色且由大到小, 只能放置最後一張
     if (isInVacancyBox && newTargetContainer[`${targetBoxIndex}`].length >= 1) {
       this.cancelDefault(e)
-    } else if (isInStandardBox && !isSameColor){
+    } else if (isInStandardBox && !isSameKindColor){
       this.cancelDefault(e)
-    } else if (isInStandardBox && isSameColor && !isOrderCard){
+    } else if (isInStandardBox && isSameKindColor && !isOrderCard){
+      this.cancelDefault(e)
+    } else if (isInCard && !isTargetCardLastCard){
+      this.cancelDefault(e)
+    } else if (isInCard && isSameColor){
+      this.cancelDefault(e)
+    } else if (isInCard && !isSameColor && !isOrderCard){
       this.cancelDefault(e)
     } else {
       if (arrayName === 'drag') {
@@ -88,7 +142,12 @@ class GameIndex extends Component {
       } else if (arrayName === 'dropped') {
         rowData = newTargetContainer[`${rowIndex}`].pop();
       }
-      newTargetContainer[`${targetBoxIndex}`] = newTargetContainer[`${targetBoxIndex}`].concat([rowData]);
+
+      if (isInCard) {
+        cardRows[`${cardIndex}`].content.push(rowData);
+      } else {
+        newTargetContainer[`${targetBoxIndex}`] = newTargetContainer[`${targetBoxIndex}`].concat([rowData]);
+      }
           
       this.cancelDefault(e)
       this.setState({
@@ -207,42 +266,42 @@ class GameIndex extends Component {
           } 
           </div>
 
-          <div className="card-row">
+          <div className="card-row" data-role="drag-drop-container">
           {
             this.state.cardRows[0].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={0} source={'drag'} isLastCard={this.state.cardRows[0].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
-          <div className="card-row">
+          <div className="card-row" data-role="drag-drop-container">
           {
             this.state.cardRows[1].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={1} source={'drag'} isLastCard={this.state.cardRows[1].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
-          <div className="card-row">
+          <div className="card-row" data-role="drag-drop-container">
           {
             this.state.cardRows[2].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={2} source={'drag'} isLastCard={this.state.cardRows[2].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
-          <div className="card-row">
+          <div className="card-row" data-role="drag-drop-container">
           {
             this.state.cardRows[3].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={3} source={'drag'} isLastCard={this.state.cardRows[3].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
-          <div className="card-row">
+          <div className="card-row" data-role="drag-drop-container">
           {
             this.state.cardRows[4].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={4} source={'drag'} isLastCard={this.state.cardRows[4].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
-          <div className="card-row">
+          <div className="card-row" data-role="drag-drop-container">
           {
             this.state.cardRows[5].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={5} source={'drag'} isLastCard={this.state.cardRows[5].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
-          <div className="card-row">
+          <div className="card-row" data-role="drag-drop-container">
           {
             this.state.cardRows[6].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={6} source={'drag'} isLastCard={this.state.cardRows[6].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }
           </div>
-          <div className="card-row">
+          <div className="card-row" data-role="drag-drop-container">
           {
             this.state.cardRows[7].content.map((data, i) => <Card key={i} cardRows={data} p={i} rowIndex={7} source={'drag'} isLastCard={this.state.cardRows[7].content.length === (i+1)} setSourceContainerId={(l) => this.setSourceContainerId(l)}/>)
           }

@@ -57,8 +57,8 @@ class Card extends Component {
     let rowIndex = this.props.rowIndex;
 
     return (
-    <div className={`${name} card top-${key}`} draggable={Boolean(draggable)} id={`${source}-${cardRows.eachColor}-${cardRows.num}-${rowIndex}`}>
-    </div>
+      <div className={`card ${name} top-${key}`}  draggable={Boolean(draggable)}  id={`${source}-${cardRows.eachColor}-${cardRows.num}-${rowIndex}`}>
+      </div>
     )
   }
 }
