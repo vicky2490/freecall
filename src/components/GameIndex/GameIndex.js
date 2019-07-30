@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './GameIndex.css';
 import _ from 'lodash';
 import Card from '../Cards/Card';
+import moment from 'moment';
 
 class GameIndex extends Component {
 
@@ -12,7 +13,15 @@ class GameIndex extends Component {
       cardRows: [],
       sourceContainerId: '',
       targetContainer: [[],[],[],[],[],[],[],[]],
+      move: '00',
+      time: 0,
     } 
+    this.interval = setInterval(() => {
+      let time = this.state.time + 1;
+      this.setState({
+        time,
+      });
+    }, 1000);
   }
 
   componentDidMount() {
@@ -137,6 +146,8 @@ class GameIndex extends Component {
     } else if (isInCard && !isSameColor && !isOrderCard){
       this.cancelDefault(e)
     } else {
+      let move = Number(this.state.move);
+      move += 1;
       if (arrayName === 'drag') {
         rowData = cardRows[`${rowIndex}`].content.pop();
       } else if (arrayName === 'dropped') {
@@ -153,6 +164,7 @@ class GameIndex extends Component {
       this.setState({
         cardRows, 
         targetContainer: newTargetContainer,
+        move,
       })
     }
   }
@@ -210,7 +222,14 @@ class GameIndex extends Component {
     this.setState({
       sourceContainerId, 
     })
-  }  
+  }
+  
+  showTime = () => {
+    const timer = moment()
+      .startOf('day')
+      .add(this.state.time, 'second');
+    return timer.format('mm:ss');
+  }
 
   render() {
     return (
@@ -219,9 +238,9 @@ class GameIndex extends Component {
           <div className="title">FREECELL</div>
           <div className="count-bar">
             <div className="count-time-move">TIME:</div>
-            <div className="count-time-move count-num">00:00</div>
+            <div className="count-time-move count-num">{this.showTime()}</div>
             <div className="count-time-move">MOVE:</div>
-            <div className="count-time-move count-num">00</div>
+            <div className="count-time-move count-num">{this.state.move}</div>
           </div>
         </div>
         <div className="context">
