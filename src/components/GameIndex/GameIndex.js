@@ -19,6 +19,7 @@ class GameIndex extends Component {
       time: 0,
       pause: false,
       openMenu: false,
+      isSuccess: false,
     }
   }
 
@@ -195,8 +196,34 @@ class GameIndex extends Component {
         targetContainer: newTargetContainer,
         move,
         previouslyStep,
+      }, ()=>{
+        let isSuccess = this.isSuccess();
+        if (isSuccess) {
+          this.setState({
+            isSuccess,
+            pause: false,
+            openMenu: true,
+          }, ()=>{
+            this.onPause();
+          })
+          let storage= window.localStorage;
+          let originalTime = storage.getItem("best");
+          if (!originalTime) {
+            storage.setItem("best", this.state.time);
+          } else {
+            if (this.state.time < originalTime) {
+              storage["best"] = this.state.time;
+            }
+          }
+        }
       })
     }
+  }
+
+  getBestTime = () => {
+    let storage= window.localStorage;
+    let bestTime = storage.getItem("best");
+    return this.showTime(bestTime);
   }
 
   replayPreviouslyStep = () => {
@@ -242,7 +269,7 @@ class GameIndex extends Component {
 
   // 畫面出來前 給予card預設值(洗牌,每排幾張)以及發牌
   componentWillMount () {
-    this.newGame();
+    this.shuffleAndDealCards();
   }
 
   setSourceContainerId = (sourceContainerId) => {
@@ -251,10 +278,11 @@ class GameIndex extends Component {
     })
   }
   
-  showTime = () => {
+  showTime = (time='') => {
+    let t = time || this.state.time;
     const timer = moment()
       .startOf('day')
-      .add(this.state.time, 'second');
+      .add(t, 'second');
     return timer.format('mm:ss');
   }
 
@@ -273,16 +301,22 @@ class GameIndex extends Component {
   startMenu = () => {
     this.setState({
       openMenu: true, 
+      pause: false,
+    }, ()=>{
+      this.onPause();
     })
   }
 
   exit = () => {
     this.setState({
       openMenu: false, 
+      pause: true,
+    }, () => {
+      this.onPause();
     })
   }
 
-  newGame = () => {
+  initialGame = () => {
     this.setState({
       card: [],
       cardRows: [],
@@ -293,7 +327,13 @@ class GameIndex extends Component {
       time: 0,
       pause: false,
       openMenu: false,
+    }, ()=>{
+      this.shuffleAndDealCards();
+      this.timeCount();
     });
+  }
+
+  shuffleAndDealCards = () => {
     let card = [];
     let row = [7,7,7,7,6,6,6,6];
     let cardRows = [];
@@ -338,6 +378,17 @@ class GameIndex extends Component {
       card, 
       cardRows, 
     })
+  }
+
+  isSuccess = () => {
+    let isSuccess = true;
+    let cardRows = this.state.cardRows;
+    for (let i=0; i<cardRows.length; i++) {
+      let lengthContent = cardRows[i].content.length;
+      if (lengthContent > 0) isSuccess = false;
+      break;
+    }
+    return isSuccess;
   }
 
   render() {
@@ -447,7 +498,7 @@ class GameIndex extends Component {
             <div className="material-icons setting">help_outline</div>
           </div>                
         </div>
-        { this.state.openMenu && <FinalMenu exit={()=>this.exit()} newGame={()=>this.newGame()}/>}
+        { this.state.openMenu && <FinalMenu exit={()=>this.exit()} newGame={()=>this.initialGame()} isSuccess={this.state.isSuccess} time={this.showTime()} bestTime={this.getBestTime()}/>}
       </div>
     )
   }
