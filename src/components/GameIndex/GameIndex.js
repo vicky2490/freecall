@@ -437,7 +437,12 @@ class GameIndex extends Component {
           <div className="game-menu">
             <div className={this.state.openMenu ? "material-icons setting work-Setting" : "material-icons setting"} onClick={()=>this.startMenu()}>power_settings_new</div>
             <div className={this.state.pause ? "material-icons setting work-Setting" : "material-icons setting"} onClick={()=>this.onPause()}>pause</div>
-            <button className="menu-btn replay" onClick={()=>this.replayPreviouslyStep()}>UNDO</button>
+            <div className="menu-btn-box">
+              <button className="menu-btn replay" onClick={()=>this.replayPreviouslyStep()}>UNDO</button>
+              <div className="card-spade"></div>
+              <div className="card-heart"></div>
+              <div className="card-club"></div>
+            </div>
             <div className="material-icons setting replay" onClick={()=>this.replayPreviouslyStep()}>replay</div>
             <div className="material-icons setting">help_outline</div>
           </div>                

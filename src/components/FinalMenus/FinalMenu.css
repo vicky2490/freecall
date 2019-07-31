@@ -56,6 +56,7 @@
   top: -110px;
   z-index: -1;
   border-radius: 7px 7px 0px 0px;  
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.16);
 }
 
 .card-heart {
@@ -70,6 +71,7 @@
   left: 40px;
   z-index: -2;
   border-radius: 7px 7px 0px 0px;  
+  box-shadow: -8px -5px 10px rgba(0, 0, 0, 0.16);
 }
 
 .card-club {
@@ -83,5 +85,6 @@
   top: -90px;
   right: 40px;
   z-index: -2;
-  border-radius: 7px 7px 0px 0px;  
+  border-radius: 7px 7px 0px 0px; 
+  box-shadow: 8px 5px 10px rgba(0, 0, 0, 0.16);
 }

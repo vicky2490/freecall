@@ -151,8 +151,60 @@ div[class*='suit']:before {
   text-decoration: none;
   font-size: 15px;
   cursor: pointer; 
+  z-index: 3;
+  position: absolute;
 }
 
 .replay:active {
   color: #FF6F72;
+}
+
+.game-menu .card-spade {
+  background-image: url('../../img/spade/spade_1.png');
+  height: 55px;
+  width: 53px;
+  background-size: 53px 55px;
+  clip: rect(15px 53px 55px 0px);
+  position: absolute;
+  top: -50px;
+  z-index: 1;
+  border-radius: 7px 7px 0px 0px;  
+  left: 40px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.16);
+}
+
+.menu-btn-box {
+  position: relative;
+  width: 135px;
+  height: 39.6px;
+}
+
+.game-menu .card-heart {
+  background-image: url('../../img/heart/heart_1.png');
+  height: 55px;
+  width: 53px;
+  background-size: 53px 55px;
+  clip: rect(15px 53px 55px 0px);
+  position: absolute;
+  transform:rotate(-25deg);
+  top: -40px;
+  left: 10px;
+  z-index: 0;
+  border-radius: 7px 7px 0px 0px; 
+  box-shadow: -8px -5px 10px rgba(0, 0, 0, 0.16);
+}
+
+.game-menu .card-club {
+  background-image: url('../../img/club/club_1.png');
+  height: 55px;
+  width: 53px;
+  background-size: 53px 55px;
+  clip: rect(15px 53px 55px 0px);
+  position: absolute;
+  transform:rotate(25deg);
+  top: -40px;
+  right: 10px;
+  z-index: 0;
+  border-radius: 7px 7px 0px 0px; 
+  box-shadow: 8px 5px 10px rgba(0, 0, 0, 0.16);
 }
